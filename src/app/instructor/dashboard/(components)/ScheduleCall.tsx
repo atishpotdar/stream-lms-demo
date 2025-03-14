@@ -49,13 +49,14 @@ export default function ScheduleCall({ user, setOpenCallModal }: UserProps) {
 
 			setCallDetail(call);
          	toast("Call Created",{
-				description: "Your call has been scheduled",
+				description: "Your call has been scheduled, "+callDetail,
 			});
             
             setOpenCallModal(false);
-		} catch (error) {
+		} catch (error:unknown) {
+			const e = error as Error;
 			toast("Call Creation Failed",{
-				description: "Failed to schedule the call",
+				description: "Failed to schedule the call, "+e.message,
 			});
 		}
     }

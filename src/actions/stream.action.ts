@@ -69,8 +69,9 @@ export async function createChannel({
 		});
 		await channel.create();
 		return { success: true, error: null, id: channel.id };
-	} catch (err) {
-		return { success: false, error: "Failed to create channel", id: null };
+	} catch (error : unknown) {
+		const e = error as Error;
+		return { success: false, error: `Failed to create channel, ${e.message}`, id: null };
 	}
 }
 
@@ -84,7 +85,9 @@ export async function getInstructorChannel(userId: string) {
 			{ last_message_at: -1 }
 		);
 		return `/chat/${channels[0].id}`;
-	} catch (err) {
+	} catch (error :unknown) {
+		const e = error as Error;
+		console.error("Error adding user to channel:", e.message);
 		return null;
 	}
 }
